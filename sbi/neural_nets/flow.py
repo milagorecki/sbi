@@ -281,11 +281,6 @@ def build_nsf(
         transform_list += block
 
     z_score_x_bool, structured_x = z_score_parser(z_score_x)
-    if z_score_x_bool:
-        # Prepend standardizing transform to nsf transforms.
-        transform_list = [
-            standardizing_transform(batch_x, structured_x)
-        ] + transform_list
 
     if sigmoid_x:
         lower = prior.support.base_constraint.lower_bound  # type: ignore
