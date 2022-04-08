@@ -154,4 +154,5 @@ class PosteriorSupport:
         """
 
         theta_log_probs = self._posterior.log_prob(theta)
-        predictions = theta_log_prob
+        predictions = theta_log_probs
+        return predictions
