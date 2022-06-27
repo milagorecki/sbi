@@ -208,10 +208,21 @@ def get_diag_func(samples, limits, opts, **kwargs):
 
     def diag_func(row, **kwargs):
         if len(samples) > 0:
+            if len(opts["labels_samples"]) == len(samples):
+                labels_samples = opts["labels_samples"]
+            else:
+                labels_samples = None
             for n, v in enumerate(samples):
                 if opts["diag"][n] == "hist":
                     plt.hist(
-                        v[:, row], color=opts["samples_colors"][n], **opts["hist_diag"]
+                        v[:, row],
+                        color=opts["samples_colors"][n],
+                        **opts["hist_diag"],
+                        range=(
+                            limits[row, 0].item(),
+                            limits[row, 1].item(),
+                        ),  # TODO: range in opts
+                        label=labels_samples[n] if labels_samples is not None else None,
                     )
                 elif opts["diag"][n] == "kde":
                     density = gaussian_kde(
@@ -225,6 +236,7 @@ def get_diag_func(samples, limits, opts, **kwargs):
                         xs,
                         ys,
                         color=opts["samples_colors"][n],
+                        label=labels_samples[n] if labels_samples is not None else None,
                     )
                 elif "upper" in opts.keys() and opts["upper"][n] == "scatter":
                     for single_sample in v:
