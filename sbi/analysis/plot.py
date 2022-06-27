@@ -791,7 +791,7 @@ def _arrange_plots(
 
     # Style axes
     row_idx = -1
-    for row in range(dim):
+    for row in range(rows):  # changed range(dims) to range(rows)
         if row not in subset:
             continue
 
@@ -799,7 +799,7 @@ def _arrange_plots(
             row_idx += 1
 
         col_idx = -1
-        for col in range(dim):
+        for col in range(cols):  # changed range(dims) to range(cols)
             if col not in subset:
                 continue
             else:
@@ -907,6 +907,9 @@ def _arrange_plots(
                             color=opts["points_colors"][n],
                             **opts["points_offdiag"],
                         )
+
+            if opts["legend"]:
+                ax.legend()
 
     if len(subset) < dim:
         if flat:
